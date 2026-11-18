@@ -1,0 +1,60 @@
+name: Build iOS IPA
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "SW2HIDBridge/**"
+      - "project.yml"
+      - "build-ipa.sh"
+      - ".github/workflows/build-ios.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: sw2-hid-bridge-ios-build
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: macos-14
+    timeout-minutes: 25
+    steps:
+      - name: Check out
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: true
+
+      - name: Install XcodeGen
+        run: brew install xcodegen
+
+      - name: Build unsigned IPA
+        run: bash build-ipa.sh
+
+      - name: Stage artifact
+        run: |
+          mkdir -p dist
+          cp ios/SW2HIDBridge-unsigned.ipa dist/SW2HIDBridge-unsigned.ipa
+          ls -lh dist/SW2HIDBridge-unsigned.ipa
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: SW2HIDBridge-unsigned-ipa
+          path: dist/SW2HIDBridge-unsigned.ipa
+          if-no-files-found: error
+
+      - name: Commit built IPA to repo
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -f dist/SW2HIDBridge-unsigned.ipa
+          if git diff --cached --quiet; then
+            echo "IPA unchanged"
+            exit 0
+          fi
+          git commit -m "Build unsigned iOS IPA for jailbroken iPhone"
+          git push origin HEAD:main

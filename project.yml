@@ -1,0 +1,27 @@
+name: SW2HIDBridge
+options:
+  bundleIdPrefix: com.theeteempire
+  deploymentTarget:
+    iOS: "16.0"
+  createIntermediateGroups: true
+settingGroups:
+  base:
+    SWIFT_VERSION: "5.9"
+    TARGETED_DEVICE_FAMILY: "1,2"
+    GENERATE_INFOPLIST_FILE: NO
+    IPHONEOS_DEPLOYMENT_TARGET: "16.0"
+targets:
+  SW2HIDBridge:
+    type: application
+    platform: iOS
+    sources:
+      - path: SW2HIDBridge
+    settings:
+      groups: [base]
+      PRODUCT_NAME: SW2HIDBridge
+      PRODUCT_BUNDLE_IDENTIFIER: com.theeteempire.sw2hidbridge
+      INFOPLIST_FILE: SW2HIDBridge/Info.plist
+      CODE_SIGNING_ALLOWED: NO
+      CODE_SIGNING_REQUIRED: NO
+      CODE_SIGN_IDENTITY: ""
+      PROVISIONING_PROFILE_SPECIFIER: ""

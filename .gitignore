@@ -1,0 +1,8 @@
+build/
+DerivedData/
+Payload/
+SW2HIDBridge.xcodeproj/
+*.xcuserdatad
+*.ipa
+!dist/*.ipa
+__pycache__/
