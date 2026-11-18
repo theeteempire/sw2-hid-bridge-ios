@@ -19,7 +19,7 @@ concurrency:
 
 jobs:
   build:
-    runs-on: macos-14
+    runs-on: macos-latest
     timeout-minutes: 25
     steps:
       - name: Check out
@@ -58,3 +58,4 @@ jobs:
           fi
           git commit -m "Build unsigned iOS IPA for jailbroken iPhone"
           git push origin HEAD:main
+
