@@ -37,7 +37,7 @@ jobs:
       - name: Stage artifact
         run: |
           mkdir -p dist
-          cp ios/SW2HIDBridge-unsigned.ipa dist/SW2HIDBridge-unsigned.ipa
+          cp SW2HIDBridge-unsigned.ipa dist/SW2HIDBridge-unsigned.ipa
           ls -lh dist/SW2HIDBridge-unsigned.ipa
 
       - name: Upload artifact
