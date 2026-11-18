@@ -52,7 +52,6 @@ final class TCPBridge: ObservableObject {
 
         let endpoint = NWEndpoint.hostPort(host: NWEndpoint.Host(host), port: NWEndpoint.Port(rawValue: port)!)
         let connection = NWConnection(to: endpoint, using: .tcp)
-        connection.queue = queue
 
         connection.stateUpdateHandler = { [weak self] state in
             switch state {
