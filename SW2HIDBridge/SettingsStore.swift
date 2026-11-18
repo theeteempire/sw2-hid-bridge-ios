@@ -50,7 +50,7 @@ final class SettingsStore: ObservableObject {
     init() {
         host = (Store.string("host")) ?? BridgeProtocol.defaultHost
         port = (Store.string("port")) ?? String(BridgeProtocol.defaultPort)
-        autoConnect = Store.bool("autoConnect", default: true)
+        autoConnect = Store.bool("autoConnect", fallback: true)
         timing = Store.decodable("timing", default: .normal)
         layout = Store.decodable("layout", default: .us)
         report = Store.decodable("report", default: .single)
@@ -71,9 +71,9 @@ final class SettingsStore: ObservableObject {
         static func string(_ key: String) -> String? {
             UserDefaults.standard.string(forKey: "sw2." + key)
         }
-        static func bool(_ key: String, default: Bool) -> Bool {
+        static func bool(_ key: String, fallback: Bool) -> Bool {
             let v = UserDefaults.standard.object(forKey: "sw2." + key) as? Bool
-            return v ?? default
+            return v ?? fallback
         }
         static func decodable<T: Decodable>(_ key: String, default: T) -> T {
             guard let data = UserDefaults.standard.data(forKey: "sw2." + key),
